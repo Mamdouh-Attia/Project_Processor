@@ -36,7 +36,7 @@ assign flags = 0;
 	flags[1] = result === 0 ? 1 : 0;
 	end
 
-	if(operation == 3'b100)		// NOP
+	if(operation == 3'b010)		// NOP
 	begin end
 
 	if(operation === 3'b011)	// Store
