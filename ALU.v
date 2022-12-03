@@ -17,11 +17,10 @@ endmodule
 module NOP();
 endmodule
 
-module ALU_Execute(input clk, input operation, input[15:0] src, input[15:0] dst, output reg[15:0] result, output reg[3:0] flags);
+module ALU_Execute(input clk, input[2:0] operation, input[15:0] src, input[15:0] dst, output reg[15:0] result, output reg[3:0] flags);
 // flags -> 0: carry, 1: zero, 2: negative, 3: overflow
-assign flags = 0;
 
- always @ (posedge clk) begin
+ always @ (*) begin
  	if(operation === 3'b000)	// Add
 	begin
 	{flags[0], result} = src + dst;
@@ -32,19 +31,21 @@ assign flags = 0;
 
 	if(operation == 3'b001)		// Invert
 	begin
-	result = ~dst;
+	result = ~src;
+	flags[0] =  0;
 	flags[1] = result === 0 ? 1 : 0;
+	flags[2] =  0;
+	flags[3] =  0;
 	end
 
 	if(operation == 3'b100)		// NOP
-	begin end
+	begin
+
+	 end
 
 	if(operation === 3'b011)	// Store
 	begin
-	{flags[0], result} = src + dst;
-	flags[1] =  result === 0 ? 1 : 0;
-	flags[2] = result[15] === 1 ? 1 : 0;
-	flags[3] = (src[15] == dst[15] && src[15] !== result[15]) ? 1 : 0;
+	result = dst;
 	end
 
 	if(operation === 3'b010)	// Load
