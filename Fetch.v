@@ -19,7 +19,7 @@ Memory instructionMemory (read_enable,write_enable,instruction,write_data,clk,re
 
 always @(negedge clk)//?
 begin
-    pcout=pcin+1;
+    pcout=pcin+2;
 end
  
 

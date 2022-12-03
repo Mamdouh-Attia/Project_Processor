@@ -17,11 +17,10 @@ endmodule
 module NOP();
 endmodule
 
-module ALU_Execute(input clk, input operation, input[15:0] src, input[15:0] dst, output reg[15:0] result, output reg[3:0] flags);
+module ALU_Execute(input clk, input[2:0] operation, input[15:0] src, input[15:0] dst, output reg[15:0] result, output reg[3:0] flags);
 // flags -> 0: carry, 1: zero, 2: negative, 3: overflow
-assign flags = 0;
 
- always @ (posedge clk) begin
+ always @ (*) begin
  	if(operation === 3'b000)	// Add
 	begin
 	{flags[0], result} = src + dst;

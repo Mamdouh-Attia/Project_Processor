@@ -50,20 +50,16 @@ end
 
 endmodule //ControlUnit
 
-module RegFile_registers #(
-    parameter N = 16,   // register size
-    parameter accessBits = 3,
-    parameter registersCount = 8
-)
+module RegFile_registers
 (read_enable, write_enable, read_data1,read_data2, write_data, clk, reset, read_addr1,read_addr2, write_addr);
 
 // declaration
 input read_enable, write_enable, reset, clk;
-input[N-1 : 0] write_data;
-input[accessBits-1 : 0] read_addr1,read_addr2, write_addr;
-output reg[N-1 : 0] read_data1;
-output reg[N-1 : 0] read_data2;
-reg[N-1 : 0] Registers[registersCount-1 : 0];
+input[15 : 0] write_data;
+input[2 : 0] read_addr1,read_addr2, write_addr;
+output reg[15 : 0] read_data1;
+output reg[15 : 0] read_data2;
+reg[15 : 0] Registers[7 : 0];
 integer i;
 
 // logic
@@ -85,7 +81,7 @@ endmodule
 
 module Decode (
     input [15:0] write_back,
-    input [15:0] instr,   //Incoming from fetch
+    input [31:0] instr,   //Incoming from fetch
     input read_enable, write_enable, reset, clk,
     input[2 : 0] read_addr1,read_addr2, write_addr,
     output reg  REG_Write,
@@ -97,7 +93,6 @@ module Decode (
     output reg[15 : 0] read_data1,
     output reg[15 : 0] read_data2
 );
-    ControlUnit cu(clk,instr[15:13],REG_Write,MEM_Write,MEM_Read,ALU_Source,MEM_to_REG,ALU_Control);
+    //ControlUnit cu(clk,instr[31:27],REG_Write,MEM_Write,MEM_Read,ALU_Source,MEM_to_REG,ALU_Control);
     RegFile_registers regFile (read_enable, write_enable, read_data1,read_data2, write_back, clk, reset, read_addr1,read_addr2, write_addr);
 endmodule
-

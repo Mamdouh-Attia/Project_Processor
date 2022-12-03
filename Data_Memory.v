@@ -3,7 +3,7 @@ module Data_Memory(read_enable,write_enable,read_data,write_data,clk,rst,read_ad
 
 input read_enable;
 input write_enable;
-input [15:0]write_data;
+input wire [15:0]write_data;
 input [15:0]read_addr;
 input [15:0]write_addr;
 input clk;
@@ -16,7 +16,7 @@ always @ (posedge clk or posedge rst)
 begin
 if(rst)
 begin
-for(j=0;j<1000000;j=j+1)
+for(j=0;j<2044;j=j+1)
 Memo[j]='b0;
 end
 
@@ -25,9 +25,9 @@ if(write_enable==1'b1)
 
 end
 
-always @ (negedge clk )
+always @ (*)
 begin
-read_data=(read_enable==1'b1) ? Memo[read_addr]:16'bxxxx_xxxx_xxxx_xxxx;
+read_data=(read_enable==1'b1) ? Memo[read_addr]:16'b0;
 end
 
-endmodule;
+endmodule
