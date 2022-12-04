@@ -12,8 +12,6 @@ wire[15:0] instruction2;
 reg[31:0] instruction;
 //decode
 wire [15:0] write_back;
-wire read_enable, write_enable;
-wire [2 : 0] read_addr1,read_addr2, write_addr;
 wire  REG_Write;
 wire  MEM_Write;
 wire  MEM_Read;
@@ -45,7 +43,7 @@ Decode2 decode_stage(
     read_data2
 );
 ALU_Execute execute_stage(clk, ALU_Control, read_data1, alu_second_operand,result,flags);
-Data_Memory memory_stage(MEM_Read,MEM_Write,read_data_from_memory,read_data2,clk,reset,result,result);
+Data_Memory memory_stage(MEM_Read,MEM_Write,read_data_from_memory,read_data1,clk,reset,result,result);
 WriteBack write_back_stage(
     read_data_from_memory,
     result,
