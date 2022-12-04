@@ -33,8 +33,8 @@ Fetch fetch_stage_2nd_half (pcin2,pcout2,instruction2,clk,reset);
 Decode2 decode_stage(
     write_back,
     instruction,   //Incoming from fetch
-    read_enable, write_enable, reset, clk,
-    read_addr1,read_addr2, write_addr,
+    reset,
+    clk,
     REG_Write,
     MEM_Write,
     MEM_Read,

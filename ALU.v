@@ -31,19 +31,21 @@ module ALU_Execute(input clk, input[2:0] operation, input[15:0] src, input[15:0]
 
 	if(operation == 3'b001)		// Invert
 	begin
-	result = ~dst;
+	result = ~src;
+	flags[0] =  0;
 	flags[1] = result === 0 ? 1 : 0;
+	flags[2] =  0;
+	flags[3] =  0;
 	end
 
 	if(operation == 3'b100)		// NOP
-	begin end
+	begin
+
+	 end
 
 	if(operation === 3'b011)	// Store
 	begin
-	{flags[0], result} = src + dst;
-	flags[1] =  result === 0 ? 1 : 0;
-	flags[2] = result[15] === 1 ? 1 : 0;
-	flags[3] = (src[15] == dst[15] && src[15] !== result[15]) ? 1 : 0;
+	result = dst;
 	end
 
 	if(operation === 3'b010)	// Load

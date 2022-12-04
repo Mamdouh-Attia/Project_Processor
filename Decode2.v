@@ -1,8 +1,7 @@
 module Decode2 (
     input [15:0] write_back,
     input [31:0] instr,   //Incoming from fetch
-    input read_enable, write_enable, reset, clk,
-    input[2 : 0] read_addr1,read_addr2, write_addr,
+    input reset,clk,
     output reg  REG_Write,
     output reg  MEM_Write,
     output reg  MEM_Read,
@@ -12,8 +11,7 @@ module Decode2 (
     output reg[15 : 0] read_data1,
     output reg[15 : 0] read_data2
 );
-    //ControlUnit cu(clk,instr[31:27],REG_Write,MEM_Write,MEM_Read,ALU_Source,MEM_to_REG,ALU_Control);
-    //RegFile_registers regFile (read_enable, write_enable, read_data1,read_data2, write_back, clk, reset, read_addr1,read_addr2, write_addr);
+
 //Reg File logic
 reg[15 : 0] Registers[7 : 0];
 integer i;
@@ -27,7 +25,7 @@ end
 always @(*) begin
     if (instr[31:27]==5'b00001) begin           //LDM instruction
         ALU_Control = 3'b010;
-        REG_Write   = 0;
+        REG_Write   = 1;
         MEM_Write   = 0;
         MEM_Read    = 1;
         ALU_Source  = 1;
@@ -61,29 +59,18 @@ always @(*) begin
         ALU_Source  = 0;
         MEM_to_REG  = 0;
     end
-
     // reset
     if (reset)
     begin
-    	for(i = 0; i < 8; i = i + 1)
-             Registers[i] = 0;
+        for(i = 0; i < 8; i = i + 1)
+            Registers[i] = 0;
     end
-// read
+    // write
+    if (REG_Write && write_back)
+        Registers[instr[23:21]]  = write_back;
+    // read
     read_data1 = Registers[instr[26:24]];
     read_data2 = Registers[instr[23:21]];
-// write
-    if (REG_Write )
-        Registers[instr[23:21]]  = write_back;
-
-
-
 end
-
-
-
-
-
-
-
 
 endmodule
