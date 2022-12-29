@@ -1,0 +1,143 @@
+vsim -gui work.ALU
+add wave -position insertpoint  \
+sim:/ALU/clk \
+sim:/ALU/alu_control \
+sim:/ALU/src \
+sim:/ALU/dst \
+sim:/ALU/result \
+sim:/ALU/flags
+force -freeze sim:/ALU/clk 1 0, 0 {100 ps} -r 200
+#force -freeze sim:/ALU/flags 0 0
+
+# not
+force -freeze sim:/ALU/alu_control 11 0
+force -freeze sim:/ALU/src 1101 0
+force -freeze sim:/ALU/dst 0011001100110011 0
+run
+run
+
+# inc
+force -freeze sim:/ALU/alu_control 100 0
+force -freeze sim:/ALU/src 1101 0
+force -freeze sim:/ALU/dst 0011001100110011 0
+run
+run
+run
+run
+
+#dec
+force -freeze sim:/ALU/alu_control 101 0
+force -freeze sim:/ALU/src 1101 0
+force -freeze sim:/ALU/dst 0011001100110011 0
+run
+run
+run
+run
+
+#mov
+force -freeze sim:/ALU/alu_control 1000 0
+force -freeze sim:/ALU/src 1101 0
+force -freeze sim:/ALU/dst 0011001100110011 0
+run
+run
+run
+run
+
+#add
+force -freeze sim:/ALU/alu_control 1001 0
+force -freeze sim:/ALU/src 0001111100011010 0
+force -freeze sim:/ALU/dst 1011001100110011 0
+run
+run
+run
+run
+
+#sub
+force -freeze sim:/ALU/alu_control 1010 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0100000100000100 0
+run
+run
+run
+run
+
+#and
+force -freeze sim:/ALU/alu_control 1011 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0100000100000100 0
+run
+run
+run
+run
+
+#or
+force -freeze sim:/ALU/alu_control 1100 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0100100100000110 0
+run
+run
+run
+run
+
+#shl
+force -freeze sim:/ALU/alu_control 1101 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0000000000000110 0
+run
+run
+run
+run
+
+#shr
+force -freeze sim:/ALU/alu_control 1110 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0000000000000110 0
+run
+run
+run
+run
+
+#push
+force -freeze sim:/ALU/alu_control 1111 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0000000000000110 0
+run
+run
+run
+run
+
+#pop
+force -freeze sim:/ALU/alu_control 10000 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0000000000000110 0
+run
+run
+run
+run
+
+#setc
+force -freeze sim:/ALU/alu_control 00001 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0000000000000110 0
+run
+run
+run
+run
+
+#clc
+force -freeze sim:/ALU/alu_control 00010 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0000000000000110 0
+run
+run
+run
+run
+
+#nop
+force -freeze sim:/ALU/alu_control 0 0
+force -freeze sim:/ALU/src 1111011110111101 0
+force -freeze sim:/ALU/dst 0000000000000110 0
+run
+run
+run
+run
