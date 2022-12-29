@@ -1,0 +1,107 @@
+m255
+K4
+z2
+!s11f MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dD:/3rd-year-1st-term/vlsi_proj/mini_proj_2
+vData_Memory
+Z0 !s110 1672299996
+!i10b 1
+!s100 J0;5@YlO]dgf`8BljhQ;02
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+InRI<ZI]cb:4@WBoT7eo:c0
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 dD:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor
+Z4 w1672299989
+Z5 8D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v
+Z6 FD:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v
+!i122 10
+L0 2 38
+Z7 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z8 !s108 1672299996.000000
+Z9 !s107 D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v|
+Z10 !s90 -reportprogress|300|-work|work|-stats=none|D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v|
+!i113 1
+Z11 o-work work
+Z12 tCvgOpt 0
+n@data_@memory
+vData_Memory_tb
+Z13 !s110 1672315267
+!i10b 1
+!s100 9fZk8b170iMM>Z]hRML290
+R1
+IVk]0<fa0jV9z9GLQ5@Kao2
+R2
+R3
+Z14 w1672315261
+Z15 8D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v
+Z16 FD:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v
+!i122 13
+L0 2 34
+R7
+r1
+!s85 0
+31
+Z17 !s108 1672315267.000000
+!s107 D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v|
+Z18 !s90 -reportprogress|300|-work|work|-stats=none|D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v|
+!i113 1
+R11
+R12
+n@data_@memory_tb
+vMemory_Stage
+R0
+!i10b 1
+!s100 TE5QIVMo@NUnU@4CV>X@:3
+R1
+IcT1QWj2=fmQX3V8E]TS3P0
+R2
+R3
+R4
+R5
+R6
+!i122 10
+L0 41 44
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!i113 1
+R11
+R12
+n@memory_@stage
+vMemory_Stage_tb
+R13
+!i10b 1
+!s100 cK?]0TV3ckBhZ7O4Z55hE2
+R1
+IzdjS91WIGkgU]W1oQJA^l2
+R2
+R3
+R14
+R15
+R16
+!i122 13
+L0 37 80
+R7
+r1
+!s85 0
+31
+R17
+Z19 !s107 D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v|
+R18
+!i113 1
+R11
+R12
+n@memory_@stage_tb

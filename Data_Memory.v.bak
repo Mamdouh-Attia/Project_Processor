@@ -53,10 +53,11 @@ input mem_write,
 input mem_read,
 input which_data1,
 input which_data2,
-output wire [15:0]output_data);
+output reg [15:0]output_data);
 reg [15:0]addr;
 reg [31:0]sp;
 reg [15:0]data;
+wire [15:0]out_data;
 assign sp=32'b011111111111;
 
 // ask about always parameter????

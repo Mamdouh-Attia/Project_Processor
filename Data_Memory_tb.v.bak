@@ -1,38 +1,4 @@
 
-module Data_Memory_tb();
-reg clk,reset,read_enable,write_enable;
-wire [15:0]read_data;
-reg [15:0]write_data;
-reg [15:0]addr;
-
-Data_Memory memo (read_enable,write_enable,read_data,write_data,clk,reset,addr);
-initial
-begin
-clk=0;
-reset=0;
-forever #2 clk=~clk;
-end
-
-initial
-begin
-
-read_enable=1;
-write_enable=0;
-addr=16'b0000_0000_0000_0010;
-#5
-read_enable=0;
-write_enable=1;
-addr=16'b0000_0000_0000_0010;
-write_data=16'b1;
-#5
-read_enable=1;
-write_enable=0;
-addr=16'b0000_0000_0000_0010;
-end
-
-
-
-endmodule
 
 module Memory_Stage_tb();
 reg clk,rst,mem_read,mem_write,dec_sp,inc_sp,which_data1,which_data2,stack_signal;

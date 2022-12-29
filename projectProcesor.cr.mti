@@ -1,0 +1,18 @@
+D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v {1 {vlog -work work -stats=none D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Data_Memory_tb
+-- Compiling module Memory_Stage_tb
+
+Top level modules:
+	Data_Memory_tb
+	Memory_Stage_tb
+
+} {} {}} D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v {1 {vlog -work work -stats=none D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Data_Memory
+-- Compiling module Memory_Stage
+
+Top level modules:
+	Memory_Stage
+
+} {} {}}
