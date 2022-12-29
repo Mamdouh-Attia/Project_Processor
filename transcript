@@ -1,0 +1,209 @@
+# Compile of Data_Memory.v failed with 1 errors.
+# Compile of Data_Memory_tb.v failed with 1 errors.
+# 2 compiles, 2 failed with 2 errors.
+# Compile of Data_Memory.v was successful.
+# Compile of Data_Memory_tb.v was successful.
+# 2 compiles, 0 failed with no errors.
+# Compile of Data_Memory.v was successful.
+# Compile of Data_Memory_tb.v was successful.
+# 2 compiles, 0 failed with no errors.
+# Load canceled
+# Compile of Data_Memory_tb.v failed with 3 errors.
+# Compile of Data_Memory_tb.v was successful.
+vsim -gui work.Memory_Stage_tb
+# vsim -gui work.Memory_Stage_tb 
+# Start time: 09:16:21 on Dec 29,2022
+# Loading work.Memory_Stage_tb
+# Loading work.Memory_Stage
+# Loading work.Data_Memory
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (16) for port 'output_data'. The port definition is at: D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v(56).
+#    Time: 0 ps  Iteration: 0  Instance: /Memory_Stage_tb/memo File: D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v Line: 12
+mem load -i D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data.mem /Memory_Stage_tb/memo/Mem/Memo
+mem load -i D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data.mem /Memory_Stage_tb/memo/Mem/Memo
+mem load -filltype inc -filldata 1 -fillradix binary -skip 0 /Memory_Stage_tb/memo/Mem/Memo
+mem save -o D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data.mem -f mti -data binary -addr decimal -wordsperline 1 /Memory_Stage_tb/memo/Mem/Memo
+mem load -i D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data.mem /Memory_Stage_tb/memo/Mem/Memo
+add wave -position end  sim:/Memory_Stage_tb/address
+add wave -position end  sim:/Memory_Stage_tb/clk
+add wave -position end  sim:/Memory_Stage_tb/dec_sp
+add wave -position end  sim:/Memory_Stage_tb/flags
+add wave -position end  sim:/Memory_Stage_tb/inc_sp
+add wave -position end  sim:/Memory_Stage_tb/input_data
+add wave -position end  sim:/Memory_Stage_tb/mem_read
+add wave -position end  sim:/Memory_Stage_tb/mem_write
+add wave -position end  sim:/Memory_Stage_tb/output_data
+add wave -position end  sim:/Memory_Stage_tb/pc_heigh
+add wave -position end  sim:/Memory_Stage_tb/pc_low
+add wave -position end  sim:/Memory_Stage_tb/rst
+add wave -position end  sim:/Memory_Stage_tb/stack_signal
+add wave -position end  sim:/Memory_Stage_tb/which_data1
+add wave -position end  sim:/Memory_Stage_tb/which_data2
+run -all
+# Break key hit
+# Simulation stop requested.
+quit -sim
+# End time: 09:35:31 on Dec 29,2022, Elapsed time: 0:19:10
+# Errors: 0, Warnings: 10
+# Compile of Data_Memory_tb.v was successful.
+vsim -gui work.Memory_Stage_tb
+# vsim -gui work.Memory_Stage_tb 
+# Start time: 09:36:36 on Dec 29,2022
+# Loading work.Memory_Stage_tb
+# Loading work.Memory_Stage
+# Loading work.Data_Memory
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (16) for port 'output_data'. The port definition is at: D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v(56).
+#    Time: 0 ps  Iteration: 0  Instance: /Memory_Stage_tb/memo File: D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v Line: 12
+add wave -position end  sim:/Memory_Stage_tb/which_data2
+add wave -position end  sim:/Memory_Stage_tb/which_data1
+add wave -position end  sim:/Memory_Stage_tb/stack_signal
+add wave -position end  sim:/Memory_Stage_tb/rst
+add wave -position end  sim:/Memory_Stage_tb/pc_low
+add wave -position end  sim:/Memory_Stage_tb/pc_heigh
+add wave -position end  sim:/Memory_Stage_tb/output_data
+add wave -position end  sim:/Memory_Stage_tb/mem_write
+add wave -position end  sim:/Memory_Stage_tb/mem_read
+add wave -position end  sim:/Memory_Stage_tb/input_data
+add wave -position end  sim:/Memory_Stage_tb/inc_sp
+add wave -position end  sim:/Memory_Stage_tb/flags
+add wave -position end  sim:/Memory_Stage_tb/dec_sp
+add wave -position end  sim:/Memory_Stage_tb/clk
+add wave -position end  sim:/Memory_Stage_tb/address
+# Load canceled
+run -all
+# Break key hit
+# Break in Module Data_Memory at D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v line 17
+quit -sim
+# End time: 09:37:43 on Dec 29,2022, Elapsed time: 0:01:07
+# Errors: 0, Warnings: 3
+# Compile of Data_Memory_tb.v was successful.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/projectProcesor.mpf).  File can not be renamed.
+vsim -gui work.Memory_Stage_tb
+# vsim -gui work.Memory_Stage_tb 
+# Start time: 09:39:37 on Dec 29,2022
+# Loading work.Memory_Stage_tb
+# Loading work.Memory_Stage
+# Loading work.Data_Memory
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (16) for port 'output_data'. The port definition is at: D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v(56).
+#    Time: 0 ps  Iteration: 0  Instance: /Memory_Stage_tb/memo File: D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v Line: 12
+add wave -position end  sim:/Memory_Stage_tb/input_data
+add wave -position end  sim:/Memory_Stage_tb/clk
+add wave -position end  sim:/Memory_Stage_tb/address
+add wave -position end  sim:/Memory_Stage_tb/output_data
+quit -sim
+# End time: 09:44:26 on Dec 29,2022, Elapsed time: 0:04:49
+# Errors: 1, Warnings: 3
+# Compile of Data_Memory.v was successful.
+# Compile of Data_Memory_tb.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim -gui work.Memory_Stage_tb
+# vsim -gui work.Memory_Stage_tb 
+# Start time: 09:44:48 on Dec 29,2022
+# Loading work.Memory_Stage_tb
+# Loading work.Memory_Stage
+# Loading work.Data_Memory
+# ** Error (suppressible): (vsim-3053) Illegal output or inout port connection for port 'read_data'.
+#    Time: 0 ps  Iteration: 0  Instance: /Memory_Stage_tb/memo/Mem File: D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v Line: 82
+# Error loading design
+# End time: 09:44:49 on Dec 29,2022, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 2
+# Compile of Data_Memory.v was successful.
+# Compile of Data_Memory_tb.v was successful.
+# 2 compiles, 0 failed with no errors.
+# Load canceled
+vsim -gui work.Memory_Stage_tb
+# vsim -gui work.Memory_Stage_tb 
+# Start time: 09:47:02 on Dec 29,2022
+# Loading work.Memory_Stage_tb
+# Loading work.Memory_Stage
+# Loading work.Data_Memory
+add wave -position end  sim:/Memory_Stage_tb/output_data
+add wave -position end  sim:/Memory_Stage_tb/input_data
+add wave -position end  sim:/Memory_Stage_tb/mem_read
+add wave -position end  sim:/Memory_Stage_tb/mem_write
+add wave -position end  sim:/Memory_Stage_tb/inc_sp
+add wave -position end  sim:/Memory_Stage_tb/dec_sp
+add wave -position end  sim:/Memory_Stage_tb/clk
+add wave -position end  sim:/Memory_Stage_tb/address
+add wave -position end  sim:/Memory_Stage_tb/which_data1
+add wave -position end  sim:/Memory_Stage_tb/which_data2
+add wave -position end  sim:/Memory_Stage_tb/stack_signal
+run -all
+# Break key hit
+# Break in Module Data_Memory at D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory.v line 17
+quit -sim
+# End time: 09:50:15 on Dec 29,2022, Elapsed time: 0:03:13
+# Errors: 0, Warnings: 2
+# Load canceled
+# Compile of Data_Memory_tb.v was successful.
+vsim -gui work.Memory_Stage_tb
+# vsim -gui work.Memory_Stage_tb 
+# Start time: 09:51:08 on Dec 29,2022
+# Loading work.Memory_Stage_tb
+# Loading work.Memory_Stage
+# Loading work.Data_Memory
+add wave -position end  sim:/Memory_Stage_tb/which_data2
+add wave -position end  sim:/Memory_Stage_tb/which_data1
+add wave -position end  sim:/Memory_Stage_tb/stack_signal
+add wave -position end  sim:/Memory_Stage_tb/pc_low
+add wave -position end  sim:/Memory_Stage_tb/pc_heigh
+add wave -position end  sim:/Memory_Stage_tb/output_data
+add wave -position end  sim:/Memory_Stage_tb/mem_write
+add wave -position end  sim:/Memory_Stage_tb/mem_read
+add wave -position end  sim:/Memory_Stage_tb/input_data
+add wave -position end  sim:/Memory_Stage_tb/inc_sp
+add wave -position end  sim:/Memory_Stage_tb/dec_sp
+add wave -position end  sim:/Memory_Stage_tb/address
+add wave -position end  sim:/Memory_Stage_tb/clk
+quit -sim
+vsim -gui work.Memory_Stage_tb
+# End time: 09:52:02 on Dec 29,2022, Elapsed time: 0:00:54
+# Errors: 0, Warnings: 2
+# vsim -gui work.Memory_Stage_tb 
+# Start time: 09:52:02 on Dec 29,2022
+# Loading work.Memory_Stage_tb
+# Loading work.Memory_Stage
+# Loading work.Data_Memory
+add wave -position end  sim:/Memory_Stage_tb/which_data2
+add wave -position end  sim:/Memory_Stage_tb/which_data1
+add wave -position end  sim:/Memory_Stage_tb/stack_signal
+add wave -position end  sim:/Memory_Stage_tb/output_data
+add wave -position end  sim:/Memory_Stage_tb/mem_write
+add wave -position end  sim:/Memory_Stage_tb/mem_read
+add wave -position end  sim:/Memory_Stage_tb/input_data
+add wave -position end  sim:/Memory_Stage_tb/inc_sp
+add wave -position end  sim:/Memory_Stage_tb/dec_sp
+add wave -position end  sim:/Memory_Stage_tb/clk
+add wave -position end  sim:/Memory_Stage_tb/address
+# Load canceled
+run -all
+mem load -i D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data.mem /Memory_Stage_tb/memo/Mem/Memo
+# Break key hit
+# Simulation stop requested.
+quit -sim
+vsim -gui work.Memory_Stage_tb
+# End time: 09:54:16 on Dec 29,2022, Elapsed time: 0:02:14
+# Errors: 0, Warnings: 1
+# vsim -gui work.Memory_Stage_tb 
+# Start time: 09:54:17 on Dec 29,2022
+# Loading work.Memory_Stage_tb
+# Loading work.Memory_Stage
+# Loading work.Data_Memory
+add wave -position end  sim:/Memory_Stage_tb/mem_write
+add wave -position end  sim:/Memory_Stage_tb/which_data2
+add wave -position end  sim:/Memory_Stage_tb/which_data1
+add wave -position end  sim:/Memory_Stage_tb/stack_signal
+add wave -position end  sim:/Memory_Stage_tb/output_data
+add wave -position end  sim:/Memory_Stage_tb/mem_read
+add wave -position end  sim:/Memory_Stage_tb/input_data
+add wave -position end  sim:/Memory_Stage_tb/inc_sp
+add wave -position end  sim:/Memory_Stage_tb/dec_sp
+add wave -position end  sim:/Memory_Stage_tb/clk
+add wave -position end  sim:/Memory_Stage_tb/address
+mem load -i D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data.mem /Memory_Stage_tb/memo/Mem/Memo
+run -all
+# Break key hit
+# Break in Module Memory_Stage_tb at D:/3rd-year-1st-term/Project_Data_Memory_Interface/Project_Processor/Data_Memory_tb.v line 32
+# End time: 10:21:21 on Dec 29,2022, Elapsed time: 0:27:04
+# Errors: 0, Warnings: 2
