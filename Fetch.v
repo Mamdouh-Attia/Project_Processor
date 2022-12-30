@@ -14,7 +14,7 @@ assign read_enable=1;
 assign write_enable=0;
 
 
-Memory instructionMemory (read_enable,write_enable,instruction,write_data,clk,0,pcin,write_addr);
+Memory instructionMemory (read_enable,write_enable,instruction,write_data,clk,reset,pcin,write_addr);
 
 
 always @(negedge clk)

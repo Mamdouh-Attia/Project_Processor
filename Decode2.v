@@ -1,4 +1,4 @@
--module Decode2 (
+module Decode2 (
     input [15:0] write_back,  //Incoming from write back
     input [31:0] instr,      //Incoming from fetch
     input reset,clk,
@@ -25,7 +25,7 @@
 reg[15 : 0] Registers[7 : 0];
 integer i;
 //control unit logic
-always @(*) begin
+always @(posedge clk) begin
     if (instr[31:27]==5'b00001) begin           //LDM instruction
         ALU_Control = 5'b10001;
         REG_Write   = 1;
@@ -469,5 +469,7 @@ always @(*) begin
     // read from reg file
     read_data1 = Registers[instr[26:24]];
     read_data2 = Registers[instr[23:21]];
+    //JDU logic
+    //reading flags directly from execution buffer
 end
 endmodule

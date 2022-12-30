@@ -1,15 +1,18 @@
 // flags -> 0: carry, 1: zero, 2: negative, 3: overflow
-module ALU(input clk, input[4:0] alu_control, input[15:0] src, input[15:0] dst, output reg[15:0] result, output reg[3:0] flags);
+module ALU(input clk, input[4:0] alu_control, input[15:0] src, input[15:0] dst, output reg[15:0] result, output reg[3:0] flags,input reset);
 
 	
  always @ (posedge clk)
   begin
- 	if(alu_control === 0)	// NOP
+	if (reset==1) begin
+		flags=0;
+	end
+ 	else if(alu_control === 0)	// NOP
 	begin
 		// nothing
 	end
 
-	else if(alu_control === 1)		// SETC
+		else if(alu_control === 1)		// SETC
 	begin
 		flags[0] = 1;
 	end
