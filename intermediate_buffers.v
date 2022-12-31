@@ -83,6 +83,7 @@ module buffer_id (
 
 
 
+    output buffer_id_REG_Write_out,
     output buffer_id_MEM_Write_out,
     output buffer_id_MEM_Read_out,
     output buffer_id_ALU_Source_out,
@@ -102,6 +103,7 @@ module buffer_id (
     output [2:0]buffer_id_Rdst_out ,
     output[31:0] buffer_id_pc_out
 );
+reg buffer_id_REG_Write_reg;
 reg buffer_id_MEM_Write_reg;
 reg buffer_id_MEM_Read_reg;
 reg buffer_id_ALU_Source_reg;
@@ -122,6 +124,7 @@ reg [2:0]buffer_id_Rdst_reg ;
 reg [31:0]buffer_id_pc_reg;
 always @(posedge clk ) begin
     if (ID_Flush) begin
+        buffer_id_REG_Write_reg=0;
         buffer_id_MEM_Write_reg=0;
         buffer_id_MEM_Read_reg=0;
         buffer_id_ALU_Source_reg=0;
@@ -145,6 +148,7 @@ always @(posedge clk ) begin
     end
     else begin
     //write data to regs
+        buffer_id_REG_Write_reg=buffer_id_REG_Write_in;
         buffer_id_MEM_Write_reg=buffer_id_MEM_Write_in;
         buffer_id_MEM_Read_reg=buffer_id_MEM_Read_in;
         buffer_id_ALU_Source_reg=buffer_id_ALU_Source_in;
@@ -166,6 +170,7 @@ always @(posedge clk ) begin
     end
 end
     //asynch read
+assign buffer_id_REG_Write_out=buffer_id_REG_Write_reg;
 assign buffer_id_MEM_Write_out=buffer_id_MEM_Write_reg;
 assign buffer_id_MEM_Read_out=buffer_id_MEM_Read_reg;
 assign buffer_id_ALU_Source_out=buffer_id_ALU_Source_reg;
@@ -208,10 +213,11 @@ module buffer_ie (
     input buffer_ie_STACK_SIGNAL_in,
     input buffer_ie_DEC_SP_in,
     input buffer_ie_INC_SP_in,
-    input buffer_ie_MEM_to_REG_in,
-    input buffer_ie_WRITE_PORT_in,
+    input buffer_ie_MEM_to_REG_in,//
+    input buffer_ie_WRITE_PORT_in,//
     input [31:0]buffer_ie_PC_in,
     input [3:0]buffer_ie_FLAGS_in,
+    input buffer_ie_REG_Write_in,
 
     output [2:0]buffer_ie_Rdst_out ,
     output [15:0]buffer_ie_result_out,
@@ -224,7 +230,8 @@ module buffer_ie (
     output buffer_ie_MEM_to_REG_out,
     output buffer_ie_WRITE_PORT_out,
     output [31:0]buffer_ie_PC_out,
-    output [3:0]buffer_ie_FLAGS_out
+    output [3:0]buffer_ie_FLAGS_out,
+    output buffer_ie_REG_Write_out
 );
 reg [2 :0]buffer_ie_Rdst_reg ;
 reg [15:0]buffer_ie_result_reg;
@@ -238,6 +245,7 @@ reg buffer_ie_MEM_to_REG_reg;
 reg buffer_ie_WRITE_PORT_reg;
 reg [31:0]buffer_ie_PC_reg;
 reg [3:0]buffer_ie_FLAGS_reg;
+reg buffer_ie_REG_Write_reg;
 always @(posedge clk ) begin
     if (IE_Flush) begin
         buffer_ie_Rdst_reg=0;
@@ -252,6 +260,7 @@ always @(posedge clk ) begin
         buffer_ie_WRITE_PORT_reg=0;
         buffer_ie_PC_reg=0;
         buffer_ie_FLAGS_reg=0;
+        buffer_ie_REG_Write_reg=0;
         
     end else if (IE_Stall) begin
         //no change
@@ -270,6 +279,7 @@ always @(posedge clk ) begin
         buffer_ie_WRITE_PORT_reg=buffer_ie_WRITE_PORT_in;
         buffer_ie_PC_reg=buffer_ie_PC_in;
         buffer_ie_FLAGS_reg=buffer_ie_FLAGS_in;
+        buffer_ie_REG_Write_reg=buffer_ie_REG_Write_in;
     end
 end
     //asynch read
@@ -285,6 +295,7 @@ assign buffer_ie_MEM_to_REG_out=buffer_ie_MEM_to_REG_reg;
 assign buffer_ie_WRITE_PORT_out=buffer_ie_WRITE_PORT_reg;
 assign buffer_ie_PC_out=buffer_ie_PC_reg;
 assign buffer_ie_FLAGS_out=buffer_ie_FLAGS_reg;
+assign buffer_ie_REG_Write_out=buffer_ie_REG_Write_reg;
 
 endmodule
 
@@ -294,12 +305,66 @@ IM
 
 rdst
 result
-wb signals
 read data from memory
-result from alu
-rdst
+wb signals
 
 
+==>>>> reg write needs to travel from 1st buffer to last buffer to reg file again directly from it
 */
+//buffer IE/IM
+module buffer_im (
+    //signals
+    input clk,
+    input IM_Flush,
+    input IM_Stall,//  ~ !write_data
+    
+    input [2:0] buffer_im_Rdst_in,
+    input [15:0]buffer_im_result_in,
+    input [15:0]buffer_im_read_data_from_memory_in,
+    input buffer_im_MEM_to_REG_in,
+    input buffer_im_WRITE_PORT_in,
+    input buffer_im_REG_Write_in,
 
+    output[2:0] buffer_im_Rdst_out,
+    output[15:0] buffer_im_result_out,
+    output [15:0]buffer_im_read_data_from_memory_out,
+    output buffer_im_MEM_to_REG_out,
+    output buffer_im_WRITE_PORT_out,
+    output buffer_im_REG_Write_out
+);
+    reg[2:0] buffer_im_Rdst_reg;
+    reg[15:0] buffer_im_result_reg;
+    reg buffer_im_MEM_to_REG_reg;
+    reg buffer_im_WRITE_PORT_reg;
+    reg [15:0]buffer_im_read_data_from_memory_reg;
+    reg buffer_im_REG_Write_reg;
+
+always @(posedge clk ) begin
+    if (IM_Flush) begin
+        buffer_im_Rdst_reg=0;
+        buffer_im_result_reg=0;
+        buffer_im_read_data_from_memory_reg=0;
+        buffer_im_MEM_to_REG_reg=0;
+        buffer_im_WRITE_PORT_reg=0;
+        buffer_im_REG_Write_reg=0;
+    end else if (IM_Stall) begin
+        //no change
+    end
+    else begin
+    //write data to regs
+        buffer_im_Rdst_reg=buffer_im_Rdst_in;
+        buffer_im_result_reg=buffer_im_result_in;
+        buffer_im_read_data_from_memory_reg=buffer_im_read_data_from_memory_in;
+        buffer_im_MEM_to_REG_reg=buffer_im_MEM_to_REG_in;
+        buffer_im_WRITE_PORT_reg=buffer_im_WRITE_PORT_in;
+        buffer_im_REG_Write_reg=buffer_im_REG_Write_in;
+    end
+end
+assign buffer_im_Rdst_out=buffer_im_Rdst_reg;
+assign buffer_im_result_out=buffer_im_result_reg;
+assign buffer_im_read_data_from_memory_out=buffer_im_read_data_from_memory_reg;
+assign buffer_im_MEM_to_REG_out=buffer_im_MEM_to_REG_reg;
+assign buffer_im_WRITE_PORT_out=buffer_im_WRITE_PORT_reg;
+assign buffer_im_REG_Write_out=buffer_im_REG_Write_reg;
+endmodule
 

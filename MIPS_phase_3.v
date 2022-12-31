@@ -79,6 +79,7 @@ buffer_if_instruction_out,buffer_if_pc_out
 );
 Decode2 decode_stage(
     write_back,
+    buffer_im_REG_Write_out,
     instruction,   //Incoming from fetch
     reset,
     clk,
@@ -99,6 +100,7 @@ Decode2 decode_stage(
     BRANCH,
     RET
 );
+wire buffer_id_REG_Write_out;
 wire buffer_id_MEM_Write_out;
 wire buffer_id_MEM_Read_out;
 wire buffer_id_ALU_Source_out;
@@ -145,6 +147,7 @@ buffer_id id_ie_buffer (
     buffer_if_pc_out,
 
 
+    buffer_id_REG_Write_out,
     buffer_id_MEM_Write_out,
     buffer_id_MEM_Read_out,
     buffer_id_ALU_Source_out,
@@ -182,6 +185,7 @@ wire buffer_ie_MEM_to_REG_out;
 wire buffer_ie_WRITE_PORT_out;
 wire [31:0]buffer_ie_PC_out;
 wire [3:0]buffer_ie_FLAGS_out;
+wire buffer_ie_REG_Write_out;
 buffer_ie ie_im_buffer (
     //signals
     clk,
@@ -199,6 +203,7 @@ buffer_ie ie_im_buffer (
     buffer_id_WRITE_PORT_out,
     buffer_id_pc_out,
     flags,
+    buffer_id_REG_Write_out,
 
     buffer_ie_Rdst_out ,
     buffer_ie_result_out,
@@ -211,7 +216,8 @@ buffer_ie ie_im_buffer (
     buffer_ie_MEM_to_REG_out,
     buffer_ie_WRITE_PORT_out,
     buffer_ie_PC_out,
-    buffer_ie_FLAGS_out
+    buffer_ie_FLAGS_out,
+    buffer_ie_REG_Write_out
 );
 Memory_Stage memory_stage_instance(
     clk,reset,buffer_ie_read_data1_out,
@@ -228,11 +234,40 @@ Memory_Stage memory_stage_instance(
     int_mem_selector1,int_mem_selector2,
     read_data_from_memory
 );
-WriteBack write_back_stage(
+wire IM_Flush=0;
+wire IM_Stall=0;
+wire[2:0] buffer_im_Rdst_out;
+wire[15:0] buffer_im_result_out;
+wire [15:0]buffer_im_read_data_from_memory_out;
+wire buffer_im_MEM_to_REG_out;
+wire buffer_im_WRITE_PORT_out;
+// wire buffer_im_REG_Write_out;
+buffer_im buffer_im_iw(
+    //signals
+    clk,
+    IM_Flush,
+    IM_Stall,//  ~ !write_data
+    
+    buffer_ie_Rdst_out,
+    buffer_ie_result_out,
     read_data_from_memory,
-    result,
+    buffer_ie_MEM_to_REG_out,
+    buffer_ie_WRITE_PORT_out,
+    buffer_ie_REG_Write_out,
+
+    buffer_im_Rdst_out,
+    buffer_im_result_out,
+    buffer_im_read_data_from_memory_out,
+    buffer_im_MEM_to_REG_out,
+    buffer_im_WRITE_PORT_out,
+    buffer_im_REG_Write_out
+);
+
+WriteBack write_back_stage(
+    buffer_im_read_data_from_memory_out,
+    buffer_im_result_out,
     write_back,
-    MEM_to_REG
+    buffer_im_MEM_to_REG_out
 );
 always @(posedge clk) begin
     pcin1=pcout1;

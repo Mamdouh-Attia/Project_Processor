@@ -1,5 +1,6 @@
 module Decode2 (
     input [15:0] write_back,  //Incoming from write back
+    input write_back_signal,
     input [31:0] instr,      //Incoming from fetch
     input reset,clk,
     output reg  REG_Write,
@@ -463,7 +464,7 @@ always @(posedge clk) begin
             Registers[i] = 0;
     end
     // write to reg file
-    if (REG_Write && write_back)begin
+    if (write_back_signal)begin
         Registers[instr[23:21]]  = write_back;
     end
     // read from reg file
