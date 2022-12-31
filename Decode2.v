@@ -468,8 +468,8 @@ always @(posedge clk) begin
         Registers[instr[23:21]]  = write_back;
     end
     // read from reg file
-    read_data1 = Registers[instr[26:24]];
-    read_data2 = Registers[instr[23:21]];
+    read_data1 = Registers[instr[26:24]];//rdst
+    read_data2 = Registers[instr[23:21]];//rsrc
     //JDU logic
     //reading flags directly from execution buffer
 end

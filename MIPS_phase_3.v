@@ -60,16 +60,18 @@ wire [15:0]read_data_from_memory;
 
 //In out ports
 
+wire    [31:0] buffer_if_instruction_out;
 
 
 // assign pcNoinc=pcin1-2;
-FetchMux PC_MUX(pcin1,pcNoinc,branchPc,poppedPc,pcout_MUX,reset,stall,interrupt,returnInstruction,jumpInstruction);
+FetchMux PC_MUX(pcin1,pcNoinc,{16'b0,read_data1}//branchPC = dst data  R[Rdst]
+,poppedPc,
+pcout_MUX,reset,stall,interrupt,returnInstruction,jumpInstruction);
 Fetch fetch_stage_1st_half (pcout_MUX,pcout1,instruction1,clk,reset);
 Fetch fetch_stage_2nd_half (pcout_MUX+1/*compile check*/,pcout2,instruction2,clk,reset);
 //IF_buffer
 // wire    [31:0] buffer_if_instruction_in;
 // wire    [31:0] buffer_if_pc_in;
-wire    [31:0] buffer_if_instruction_out;
 wire    [31:0] buffer_if_pc_out;
 //instruction = {instruction1,instruction2};
 
@@ -167,17 +169,28 @@ buffer_id id_ie_buffer (
     buffer_id_Rdst_out ,
     buffer_id_pc_out
 );
+wire [2:0]buffer_ie_Rdst_out ;
+
+HDU hazard_detection_unit(
+    instruction[23:21] ,//Rsrc
+    instruction[26:24] ,//Rdst
+    buffer_ie_Rdst_out,
+    buffer_ie_MEM_Read_out,
+    IF_Stall,
+    ID_Stall
+);
+
+
 
 ALU execute_stage(clk, buffer_id_ALU_Control_out,
 buffer_id_read_data1_out,
 alu_second_operand,result,flags,reset);
 
 //buffer wires
-wire [2:0]buffer_ie_Rdst_out ;
 wire [15:0]buffer_ie_result_out;
 wire [15:0]buffer_ie_read_data1_out;
 wire buffer_ie_MEM_Write_out;
-wire buffer_ie_MEM_Read_out;
+// wire buffer_ie_MEM_Read_out;
 wire buffer_ie_STACK_SIGNAL_out;
 wire buffer_ie_DEC_SP_out;
 wire buffer_ie_INC_SP_out;
@@ -247,14 +260,14 @@ buffer_im buffer_im_iw(
     clk,
     IM_Flush,
     IM_Stall,//  ~ !write_data
-    
+    //inputs
     buffer_ie_Rdst_out,
     buffer_ie_result_out,
     read_data_from_memory,
     buffer_ie_MEM_to_REG_out,
     buffer_ie_WRITE_PORT_out,
     buffer_ie_REG_Write_out,
-
+    //outputs
     buffer_im_Rdst_out,
     buffer_im_result_out,
     buffer_im_read_data_from_memory_out,
@@ -287,3 +300,16 @@ end
 
 
 endmodule
+
+
+
+/*TODO
+1-jmp  (pc change in alu)
+2-In port out port
+3-simulation   to see initial results (+ assembler)
+(setup a test case)
+4-integrate JDU  ,  HDU   , FU
+=====
+5-interrupt controller + CALL , RET , RTI
+6-do files
+*/
