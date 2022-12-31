@@ -1,4 +1,4 @@
-module HDU(
+module FU(
     input [2:0]currentsrc,
     input [2:0]currentdest,
     input [2:0]exec_dest,

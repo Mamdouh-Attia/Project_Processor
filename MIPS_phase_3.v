@@ -75,6 +75,7 @@ Fetch fetch_stage_2nd_half (pcout_MUX+1/*compile check*/,pcout2,instruction2,clk
 wire    [31:0] buffer_if_pc_out;
 //instruction = {instruction1,instruction2};
 
+wire[2:0] buffer_im_Rdst_out;
 //intermediate buffer for if/id
 buffer_if if_id_buffer(clk,IF_Flush,IF_Stall,instruction,pcout1/*check later*/,
 buffer_if_instruction_out,buffer_if_pc_out
@@ -171,6 +172,7 @@ buffer_id id_ie_buffer (
 );
 wire [2:0]buffer_ie_Rdst_out ;
 
+wire buffer_ie_REG_Write_out;
 HDU hazard_detection_unit(
     instruction[23:21] ,//Rsrc
     instruction[26:24] ,//Rdst
@@ -178,6 +180,28 @@ HDU hazard_detection_unit(
     buffer_ie_MEM_Read_out,
     IF_Stall,
     ID_Stall
+);
+//to be sent to muxs
+wire [1:0] src_selector;
+wire [1:0] dest_selector;
+
+FU forwarding_unit(
+    buffer_id_Rsrc_out,
+    buffer_id_Rdst_out,
+    buffer_ie_Rdst_out,
+    buffer_im_Rdst_out,
+    buffer_im_REG_Write_out,
+    buffer_ie_REG_Write_out,
+    src_selector,
+    dest_selector
+);
+
+JDU jump_detection_unit(
+    flags,
+    BRANCH,
+    jumpInstruction,
+    IF_Flush,
+    ID_Flush
 );
 
 
@@ -198,7 +222,6 @@ wire buffer_ie_MEM_to_REG_out;
 wire buffer_ie_WRITE_PORT_out;
 wire [31:0]buffer_ie_PC_out;
 wire [3:0]buffer_ie_FLAGS_out;
-wire buffer_ie_REG_Write_out;
 buffer_ie ie_im_buffer (
     //signals
     clk,
@@ -249,7 +272,6 @@ Memory_Stage memory_stage_instance(
 );
 wire IM_Flush=0;
 wire IM_Stall=0;
-wire[2:0] buffer_im_Rdst_out;
 wire[15:0] buffer_im_result_out;
 wire [15:0]buffer_im_read_data_from_memory_out;
 wire buffer_im_MEM_to_REG_out;
@@ -290,6 +312,7 @@ end
 always @(*) begin
 instruction = {instruction1,instruction2};
 alu_second_operand=(buffer_id_ALU_Source_out)?buffer_id_immediate_out:buffer_id_read_data2_out;
+//TODO add 2 MUX before ALU 
 end
 
 //to stall is to
@@ -309,7 +332,9 @@ endmodule
 3-simulation   to see initial results (+ assembler)
 (setup a test case)
 4-integrate JDU  ,  HDU   , FU
+5-check for missing MUXs or connections in design [review the whole integration if possible]
 =====
-5-interrupt controller + CALL , RET , RTI
-6-do files
+6-interrupt controller + CALL , RET , RTI
+
+7-do files
 */

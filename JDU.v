@@ -1,6 +1,6 @@
 module JDU(
     input [3:0]flags,
-    input enable,
+    input enable,//branch control signal
     output reg jumpInstruction,
     output reg if_flush,
     output reg id_flush
