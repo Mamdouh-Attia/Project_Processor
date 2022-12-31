@@ -34,7 +34,9 @@ wire  MEM_to_REG;
 wire  [4:0] ALU_Control;
 wire  [15 : 0] read_data1;
 wire  [15 : 0] read_data2;
-wire  IF_Flush;
+wire  IF_Flush=0;
+wire  ID_Flush=0;
+wire  ID_Stall=0;
 wire  READ_PORT;
 wire  WRITE_PORT;
 wire  STACK_SIGNAL;
@@ -50,6 +52,9 @@ wire IF_Stall=0;
 reg [15:0]alu_second_operand;
 wire[15:0] result;
 wire[3:0] flags;
+
+wire IE_Flush=0;
+wire IE_Stall=0;
 //memory
 wire [15:0]read_data_from_memory;
 
@@ -94,13 +99,130 @@ Decode2 decode_stage(
     BRANCH,
     RET
 );
-ALU execute_stage(clk, ALU_Control, read_data1, alu_second_operand,result,flags,reset);
+wire buffer_id_MEM_Write_out;
+wire buffer_id_MEM_Read_out;
+wire buffer_id_ALU_Source_out;
+wire buffer_id_MEM_to_REG_out;
+wire [15:0]buffer_id_read_data1_out;
+wire [15:0]buffer_id_read_data2_out;
+wire [15:0]buffer_id_immediate_out;
+wire [4:0]buffer_id_ALU_Control_out;
+wire buffer_id_READ_PORT_out;
+wire buffer_id_WRITE_PORT_out;
+wire buffer_id_STACK_SIGNAL_out;
+wire buffer_id_DEC_SP_out;
+wire buffer_id_INC_SP_out;
+wire buffer_id_BRANCH_out;
+wire buffer_id_RET_out;
+wire [2:0]buffer_id_Rsrc_out;
+wire [2:0]buffer_id_Rdst_out;
+wire [31:0]buffer_id_pc_out;
+
+
+buffer_id id_ie_buffer (
+    //signals
+    clk,
+    ID_Flush,
+    ID_Stall,
+    REG_Write,
+    MEM_Write,
+    MEM_Read,
+    ALU_Source,
+    MEM_to_REG,
+    read_data1,
+    read_data2,
+    instruction[15:0],//immediate
+    ALU_Control,
+    READ_PORT,
+    WRITE_PORT,
+    stack_signal,
+    DEC_SP,
+    INC_SP,
+    BRANCH,
+    RET ,
+    instruction[26:24] ,//Rdst
+    instruction[23:21] ,//Rsrc
+    buffer_if_pc_out,
+
+
+    buffer_id_MEM_Write_out,
+    buffer_id_MEM_Read_out,
+    buffer_id_ALU_Source_out,
+    buffer_id_MEM_to_REG_out,
+    buffer_id_read_data1_out,
+    buffer_id_read_data2_out,
+    buffer_id_immediate_out,
+    buffer_id_ALU_Control_out,
+    buffer_id_READ_PORT_out,
+    buffer_id_WRITE_PORT_out,
+    buffer_id_STACK_SIGNAL_out,
+    buffer_id_DEC_SP_out,
+    buffer_id_INC_SP_out,
+    buffer_id_BRANCH_out,
+    buffer_id_RET_out ,
+    buffer_id_Rsrc_out ,
+    buffer_id_Rdst_out ,
+    buffer_id_pc_out
+);
+
+ALU execute_stage(clk, buffer_id_ALU_Control_out,
+buffer_id_read_data1_out,
+alu_second_operand,result,flags,reset);
+
+//buffer wires
+wire [2:0]buffer_ie_Rdst_out ;
+wire [15:0]buffer_ie_result_out;
+wire [15:0]buffer_ie_read_data1_out;
+wire buffer_ie_MEM_Write_out;
+wire buffer_ie_MEM_Read_out;
+wire buffer_ie_STACK_SIGNAL_out;
+wire buffer_ie_DEC_SP_out;
+wire buffer_ie_INC_SP_out;
+wire buffer_ie_MEM_to_REG_out;
+wire buffer_ie_WRITE_PORT_out;
+wire [31:0]buffer_ie_PC_out;
+wire [3:0]buffer_ie_FLAGS_out;
+buffer_ie ie_im_buffer (
+    //signals
+    clk,
+    IE_Flush,
+    IE_Stall,//  ~ !write_data
+    buffer_id_Rdst_out,
+    result,
+    buffer_id_read_data1_out,
+    buffer_id_MEM_Write_out,
+    buffer_id_MEM_Read_out,
+    buffer_id_STACK_SIGNAL_out,
+    buffer_id_DEC_SP_out,
+    buffer_id_INC_SP_out,
+    buffer_id_MEM_to_REG_out,
+    buffer_id_WRITE_PORT_out,
+    buffer_id_pc_out,
+    flags,
+
+    buffer_ie_Rdst_out ,
+    buffer_ie_result_out,
+    buffer_ie_read_data1_out,
+    buffer_ie_MEM_Write_out,
+    buffer_ie_MEM_Read_out,
+    buffer_ie_STACK_SIGNAL_out,
+    buffer_ie_DEC_SP_out,
+    buffer_ie_INC_SP_out,
+    buffer_ie_MEM_to_REG_out,
+    buffer_ie_WRITE_PORT_out,
+    buffer_ie_PC_out,
+    buffer_ie_FLAGS_out
+);
 Memory_Stage memory_stage_instance(
-    clk,reset,read_data1,
+    clk,reset,buffer_ie_read_data1_out,
     //to be replaced with buffer output IE/IM
-    pcin1[15:0],pcin1[31:16],flags,result,
-    stack_signal,dec_sp,inc_sp,mem_write,
-    mem_read,
+    buffer_ie_PC_out[15:0],buffer_ie_PC_out[31:16],buffer_ie_FLAGS_out,
+    buffer_ie_result_out,
+    buffer_ie_STACK_SIGNAL_out,
+    buffer_ie_DEC_SP_out,
+    buffer_ie_INC_SP_out,
+    buffer_ie_MEM_Write_out,
+    buffer_ie_MEM_Read_out,
     //selectors from interrupt controller
     //currently 0,0
     int_mem_selector1,int_mem_selector2,
@@ -119,7 +241,7 @@ always @(posedge clk) begin
 end
 always @(*) begin
 instruction = {instruction1,instruction2};
-alu_second_operand=(ALU_Source)?instruction[15:0]:read_data2;
+alu_second_operand=(buffer_id_ALU_Source_out)?buffer_id_immediate_out:buffer_id_read_data2_out;
 end
 
 //to stall is to
