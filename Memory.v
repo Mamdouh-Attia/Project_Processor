@@ -21,11 +21,11 @@ end
 always @ (posedge clk )// or posedge rst //read
 begin
 
-if(rst)
-begin
-for(j=0;j<999999;j=j+1)
-Memo[j]='b0;
-end
+// if(rst)
+// begin
+// for(j=0;j<999999;j=j+1)
+// Memo[j]='b0;
+// end
 
 if((read_enable==1'b1))
  read_data=Memo[read_addr];

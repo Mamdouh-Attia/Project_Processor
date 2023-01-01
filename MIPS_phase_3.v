@@ -331,7 +331,7 @@ endmodule
 2-In port out port
 3-simulation   to see initial results (+ assembler)
 (setup a test case)
-4-integrate JDU  ,  HDU   , FU
+/////4-integrate JDU  ,  HDU   , FU
 5-check for missing MUXs or connections in design [review the whole integration if possible]
 =====
 6-interrupt controller + CALL , RET , RTI
