@@ -121,32 +121,32 @@ module ALU(input clk, input[4:0] alu_control, input[15:0] src, input[15:0] dst, 
 
 	else if(alu_control === 18)		// LDD
 	begin
-		// nothing
+		result = src;
 	end
 
 	else if(alu_control === 19)		// STD
 	begin
-		// nothing
+		result = src;		// src = address
 	end
 
 	else if(alu_control === 20)		// JZ
 	begin
-
+		result = dst;
 	end
 
 	else if(alu_control === 21)		// JN
 	begin
-
+		result = dst;
 	end
 
 	else if(alu_control === 22)		// JC
 	begin
-
+		result = dst;
 	end
 
 	else if(alu_control === 23)		// JMP
 	begin
-
+		result = dst;
 	end
 
 	else if(alu_control === 24)		// CALL
